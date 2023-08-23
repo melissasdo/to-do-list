@@ -1,0 +1,55 @@
+<%- include("partials/header.ejs") %>
+
+<%- include("partials/navbar.ejs") %>
+
+    <main id="main" class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="mt-5 pt-4 pb-4">Work List</h1>
+
+                <div class="input-box mx-auto rounded pb-4">
+                    <% if (locals.items) { %>
+                    <ul class="list-group list-group-flush">
+                        <% for (let i = 0; i < items.length; i++) { %>
+                        <li class="list-group-item rounded">
+                            <input class="form-check-input" placeholder="New Entry" type="checkbox"
+                                id="itemCheckbox<%= i %>">
+                            <label class="form-check-label item-label stretched-link" for="itemCheckbox<%= i %>">
+                                <%= items[i] %></label>
+                        </li>
+                        <% } %>
+                    </ul>
+                    <% } %>
+
+                    <form class="pt-4" action="/" method="POST">
+                        <input class="input-field" type="text" name="newEntry">
+                        <button type="submit" class="plus btn btn-outline-dark">+</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('.form-check-input');
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.addEventListener('change', function () {
+                    const label = document.querySelector(`#itemCheckbox${index}`)
+                        .nextElementSibling;
+                    if (this.checked) {
+                        label.classList.add('strikethrough');
+                    } else {
+                        label.classList.remove('strikethrough');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <%- include("partials/footer.ejs") %>
+
+</body>
+
+</html>
